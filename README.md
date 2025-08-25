@@ -7,7 +7,9 @@ Every time you run CloudQuery sync, you receive:
 🎴 **One random tarot card** from a collection of 16 unique cards  
 🖼️ **Front & back images** (stored as base64) 
 📝 **Card meanings and descriptions** for each draw  
-🎯 **Ultra-rare cards** with special rewards (see below!)  
+🎯 **Ultra-rare cards** with special rewards (see below!)
+
+![The Alchemist](https://github.com/csreuter/feed-your-ai-tarot/blob/master/images/front/card_04.png)
 
 ## 🚀 Quick Start
 
