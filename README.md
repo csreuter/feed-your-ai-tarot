@@ -1,145 +1,93 @@
-# Feed Your AI Tarot - CloudQuery Plugin 🔮
+# 🔮 Feed Your AI Tarot Cards
 
-A CloudQuery source plugin that delivers random tarot card images for your AI and data workflows! This plugin randomly selects one tarot card per sync and delivers both the front and back images along with metadata.
+**Get mystical with your data!** This CloudQuery plugin delivers random tarot card images every time you sync. Perfect for AI training, content generation, or just adding some cosmic energy to your data workflows! ✨
 
-## 🎴 What You Get
+Every time you run CloudQuery sync, you receive:
 
-Each sync delivers:
-- **One random tarot card** from 16 available cards
-- **Front and back images** in base64 format  
-- **Card metadata**: name, number, and description
-- **Timestamp** of when the card was drawn
+🎴 **One random tarot card** from a collection of 16 unique cards  
+🖼️ **Front & back images** (stored as base64) 
+📝 **Card meanings and descriptions** for each draw  
+🎯 **Ultra-rare cards** with special rewards (see below!)  
 
-## 📦 Plugin Architecture
+## 🚀 Quick Start
 
-- [plugin/tables/items.py](plugin/tables/items.py)
-  - `TarotCards` - Table definition for tarot card data
-  - `TarotCardResolver` - Resolver that fetches random cards
-- [plugin/tarot/client.py](plugin/tarot/client.py)
-  - `TarotClient` - Core client that handles card selection and image loading
-- [plugin/client/client.py](plugin/client/client.py)
-  - `Spec` - Plugin configuration including randomness seed
-  - `Client` - CloudQuery client wrapper
-- [plugin/plugin.py](plugin/plugin.py)
-  - `TarotCardsPlugin` - Main plugin registration
+### Step 1: Install CloudQuery
+```bash
+# macOS
+brew install cloudquery/tap/cloudquery
 
-## 🚀 Getting Started
-
-### 1. Add Your Tarot Card Images
-
-Place your 16 PNG images in the `images/` directory:
-
-```
-images/
-├── front/
-│   ├── card_01.png
-│   ├── card_02.png
-│   ├── ...
-│   └── card_16.png
-└── back/
-    ├── card_01_back.png
-    ├── card_02_back.png
-    ├── ...
-    └── card_16_back.png
-```
-
-### 2. Update Card Metadata
-
-Edit `plugin/tarot/client.py` and replace the `DEFAULT_CARDS` dictionary with your card names and descriptions:
-
-```python
-DEFAULT_CARDS = {
-    1: {"name": "Your Card Name", "description": "Your card description"},
-    2: {"name": "Another Card", "description": "Another description"},
-    # ... add all 16 cards
-}
-```
-
-### 3. Configure Randomness (Optional)
-
-In your CloudQuery config (`TestConfig.yaml`), you can optionally set a randomness seed for reproducible results:
+### Step 2: Create Your Config File
+Create a file called `tarot-config.yaml`:
 
 ```yaml
 kind: source
 spec:
   name: "tarot-cards"
-  registry: "grpc"
-  path: "localhost:7777"
+  registry: "docker"
+  path: "ghcr.io/cloudquery/tarot-cards:latest"
   tables: ['*']
   destinations: ["sqlite"]
   spec:
-    randomness_seed: 42  # Optional: for reproducible randomness
+    randomness_seed: null  # Leave null for true randomness!
+
+---
+kind: destination
+spec:
+  name: sqlite
+  path: cloudquery/sqlite
+  version: "v2.4.11"
+  spec:
+    connection_string: ./my_tarot_cards.sqlite
 ```
 
-If you omit `randomness_seed`, each sync will be truly random!
+### Step 3: Draw Your Cards! 🎴
+```bash
+cloudquery sync tarot-config.yaml
+```
 
-## 🧪 Testing the Plugin
+**That's it!** Your mystical card is now stored in `my_tarot_cards.sqlite`
 
-### Local Development
+## 🔍 View Your Cards
 
-1. **Install dependencies:**
-   ```bash
-   pip install poetry
-   poetry install
-   ```
+### Quick Card Check
+```bash
+sqlite3 my_tarot_cards.sqlite "SELECT card_number, card_name FROM tarot_cards ORDER BY sync_time DESC LIMIT 1;"
+```
 
-2. **Run the plugin server:**
-   ```bash
-   poetry run main serve
-   ```
+### Extract Visual Images
+The cards come with base64-encoded images! If you're unsure, ask ChatGPT how to decode them.
 
-3. **In another terminal, sync your cards:**
-   ```bash
-   cloudquery sync
-   ```
+## 🎰 The Rare Card Hunt!
 
-This creates a `db.sqlite` database with your randomly selected tarot card!
+**Here's where it gets exciting!** 
 
-### Database Schema
+- 🎲 **Cards 1-15**: Regular cards (~6.6% each)
+- 🔥 **Card 16 "The Stormcaller"**: **ULTRA-RARE** (only 1% chance!)
 
-The `tarot_cards` table contains:
-- `card_number` (int) - Card number (1-16)
-- `card_name` (string) - Name of the card  
-- `description` (string) - Card description/meaning
-- `front_image_base64` (string) - Front image as base64
-- `back_image_base64` (string) - Back image as base64  
-- `special_instructions` (string) - Special message (only for rare cards)
-- `sync_time` (timestamp) - When the card was drawn
+### When You Pull The Stormcaller:
 
-### 🔮 Rare Card Feature
+🎉 CONGRATULATIONS! 🎉
 
-**Card 16 ("The Stormcaller")** is ultra-rare with only **1% probability**! When someone pulls this special card, they receive:
-- The rare card images  
-- **Special instructions** to contact chris.r@cloudquery.io for free CloudQuery swag!
+You pulled the legendary Stormcaller!
 
-This gamification mechanic encourages repeated CloudQuery usage as users chase the rare card. 🎯
+Contact chris.r@cloudquery.io with your address for FREE CloudQuery swag (Some shipping restrictions may apply)
 
-## 🎯 Use Cases
+**Keep syncing to chase the rare card!** Most people need 50-100 tries! 😈
 
-- **AI Training Data**: Random tarot imagery for training AI models
-- **Marketing Growth Hacks**: Encourage CloudQuery usage with mystical rewards  
-- **Data Pipeline Fun**: Add personality to your data workflows
-- **Content Generation**: Random inspirational content for apps/websites
-- **A/B Testing**: Different imagery for user engagement experiments
+## ⚡ Pro Tips
 
-## 🚀 Publishing Your Plugin
+### Get More Cards
+```bash
+# Draw 5 cards quickly
+for i in {1..5}; do cloudquery sync tarot-config.yaml; done
+```
 
-1. Update your card images and metadata
-2. Test locally to ensure everything works
-3. Run `python main.py package -m "Initial release" "v0.1.0" .`
-4. Run `cloudquery plugin publish -f` to publish to CloudQuery registry
+### Check Your Collection
+```bash
+sqlite3 my_tarot_cards.sqlite "SELECT card_number, card_name, COUNT(*) as times_pulled FROM tarot_cards GROUP BY card_number ORDER BY card_number;"
+```
 
-## 🔮 Future Enhancements
-
-Want to extend this plugin? Ideas:
-- Add card orientation (upright/reversed)
-- Include zodiac information  
-- Add multiple card spreads (3-card, Celtic Cross)
-- Integrate with AI image generation APIs
-- Add card reading interpretations
-
-## 📚 Resources
-
-- [CloudQuery Plugin Development](https://docs.cloudquery.io/docs/developers/creating-new-plugin/python-source)
-- [CloudQuery Architecture](https://www.cloudquery.io/docs/developers/architecture)
-- [Python SDK Reference](https://github.com/cloudquery/plugin-sdk-python)
+### Export All Cards
+```bash
+sqlite3 -header -csv my_tarot_cards.sqlite "SELECT * FROM tarot_cards;" > my_tarot_collection.csv
+```
