@@ -9,7 +9,7 @@ Every time you run CloudQuery sync, you receive:
 📝 **Card meanings and descriptions** for each draw  
 🎯 **Ultra-rare cards** with special rewards (see below!)
 
-![The Alchemist](https://github.com/csreuter/feed-your-ai-tarot/blob/master/images/front/card_04.png)
+<img src="https://github.com/csreuter/feed-your-ai-tarot/blob/master/images/front/card_04.png" width="25%">
 
 ## 🚀 Quick Start
 
