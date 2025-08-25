@@ -13,6 +13,8 @@ RUN poetry install --no-dev --no-interaction --no-ansi
 # Copy the rest of the code
 COPY plugin plugin
 COPY main.py .
+# Copy tarot card images into the container
+COPY images/ images/
 
 # (Optional) Expose any ports your app uses
 EXPOSE 7777

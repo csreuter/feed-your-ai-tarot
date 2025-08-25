@@ -1,7 +1,7 @@
 from dataclasses import dataclass, field
 from cloudquery.sdk.scheduler import Client as ClientABC
 
-from plugin.example.client import ExampleClient
+from plugin.tarot.client import TarotClient
 
 DEFAULT_CONCURRENCY = 100
 DEFAULT_QUEUE_SIZE = 10000
@@ -9,25 +9,23 @@ DEFAULT_QUEUE_SIZE = 10000
 
 @dataclass
 class Spec:
-    access_token: str
-    base_url: str = field(default="https://api.example.com")
+    randomness_seed: int = field(default=None)
     concurrency: int = field(default=DEFAULT_CONCURRENCY)
     queue_size: int = field(default=DEFAULT_QUEUE_SIZE)
 
     def validate(self):
         pass
-        # if self.access_token is None:
-        #     raise Exception("access_token must be provided")
+        # No strict validation needed - randomness_seed is optional
 
 
 class Client(ClientABC):
     def __init__(self, spec: Spec) -> None:
         self._spec = spec
-        self._client = ExampleClient(spec.access_token, spec.base_url)
+        self._client = TarotClient(spec.randomness_seed)
 
     def id(self):
-        return "example"
+        return "tarot-cards"
 
     @property
-    def client(self) -> ExampleClient:
+    def client(self) -> TarotClient:
         return self._client

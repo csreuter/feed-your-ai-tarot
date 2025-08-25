@@ -1,11 +1,11 @@
 import sys
 from cloudquery.sdk import serve
 
-from plugin import ExamplePlugin
+from plugin import TarotCardsPlugin
 
 
 def main():
-    p = ExamplePlugin()
+    p = TarotCardsPlugin()
     serve.PluginCommand(p).run(sys.argv[1:])
 
 

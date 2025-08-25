@@ -1,12 +1,12 @@
 kind: source
 spec:
-  name: "comics"
+  name: "tarot-cards"
   registry: "grpc"
   path: "localhost:7777"
   tables: ['*']
   destinations: ["sqlite"]
   spec:
-    base_url: https://xkcd.com
+    randomness_seed: 42
 ---
 kind: destination
 spec:

@@ -1,1 +1,3 @@
-from .items import Items
+from .items import TarotCards
+
+__all__ = ["TarotCards"]

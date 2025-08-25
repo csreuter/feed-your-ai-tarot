@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "example"
+name = "tarot-cards"
 version = "0.1.0"
 description = ""
 authors = ["Plaintextnerds <tim@plaintextnerds.com>"]

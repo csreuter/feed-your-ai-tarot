@@ -10,13 +10,13 @@ from cloudquery.sdk.scheduler import Scheduler, TableResolver
 from plugin import tables
 from plugin.client import Client, Spec
 
-PLUGIN_NAME = "example"
-PLUGIN_VERSION = "0.0.1"
+PLUGIN_NAME = "tarot-cards"
+PLUGIN_VERSION = "0.1.0"
 TEAM_NAME = "cloudquery"
 PLUGIN_KIND = "source"
 
 
-class ExamplePlugin(plugin.Plugin):
+class TarotCardsPlugin(plugin.Plugin):
     def __init__(self) -> None:
         super().__init__(
             PLUGIN_NAME, PLUGIN_VERSION, plugin.plugin.Options(team=TEAM_NAME, kind=PLUGIN_KIND)
@@ -43,7 +43,7 @@ class ExamplePlugin(plugin.Plugin):
 
     def get_tables(self, options: plugin.TableOptions) -> List[plugin.Table]:
         all_tables: List[plugin.Table] = [
-            tables.Items(),
+            tables.TarotCards(),
         ]
 
         # set parent table relationships
