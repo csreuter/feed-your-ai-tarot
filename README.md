@@ -19,18 +19,25 @@ Every time you run CloudQuery sync, you receive:
 brew install cloudquery/tap/cloudquery
 
 ### Step 2: Create Your Config File
-Create a file called `tarot-config.yaml`:
+
+**Option A: Use CloudQuery init (recommended):**
+```bash
+cloudquery init --source=feed-your-ai-tarot --destination=sqlite
+```
+
+**Option B: Manual config file** - Create a file called `tarot-config.yaml`:
 
 ```yaml
 kind: source
 spec:
-  name: "tarot-cards"
-  registry: "docker"
-  path: "ghcr.io/cloudquery/tarot-cards:latest"
-  tables: ['*']
+  name: "feed-your-ai-tarot"
+  path: "cloudquery/feed-your-ai-tarot"
+  registry: "cloudquery"
+  version: "v1.0.0"
+  tables: ["tarot_cards"]
   destinations: ["sqlite"]
   spec:
-    randomness_seed: null  # Leave null for true randomness!
+    randomness_seed: null  # Optional: set a number for reproducible results
 
 ---
 kind: destination
@@ -40,6 +47,7 @@ spec:
   version: "v2.4.11"
   spec:
     connection_string: ./my_tarot_cards.sqlite
+    write_mode: append  # IMPORTANT: Allows collecting multiple cards!
 ```
 
 ### Step 3: Draw Your Cards! 🎴
@@ -80,9 +88,11 @@ Contact chris.r@cloudquery.io with your address for FREE CloudQuery swag (Some s
 
 ### Get More Cards
 ```bash
-# Draw 5 cards quickly
+# Draw 5 cards quickly (make sure your destination uses write_mode: append!)
 for i in {1..5}; do cloudquery sync tarot-config.yaml; done
 ```
+
+**Important:** The destination must use `write_mode: append` or you'll only keep the latest card instead of building a collection!
 
 ### Check Your Collection
 ```bash

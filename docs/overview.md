@@ -1,0 +1,1 @@
+The Feed Your AI Tarot source plugin extracts random tarot card images with mystical metadata and loads them into any supported CloudQuery destination (e.g. PostgreSQL, BigQuery, Snowflake, SQLite, and more).
