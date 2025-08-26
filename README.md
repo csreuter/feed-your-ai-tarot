@@ -14,11 +14,14 @@ Every time you run CloudQuery sync, you receive:
 ## 🚀 Quick Start
 
 ### Step 1: Install CloudQuery
+
 ```bash
 # macOS
 brew install cloudquery/tap/cloudquery
+```
 
 ### Step 2: Create Your Config File
+
 Create a file called `tarot-config.yaml`:
 
 ```yaml
@@ -31,7 +34,6 @@ spec:
   destinations: ["sqlite"]
   spec:
     randomness_seed: null  # Leave null for true randomness!
-
 ---
 kind: destination
 spec:
