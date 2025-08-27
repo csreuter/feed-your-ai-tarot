@@ -17,10 +17,12 @@ Every time you run CloudQuery sync, you receive:
 ```bash
 # macOS
 brew install cloudquery/tap/cloudquery
+```
 
 ### Step 2: Create Your Config File
 
 **Option A: Use CloudQuery init (recommended):**
+
 ```bash
 cloudquery init --source=feed-your-ai-tarot --destination=sqlite
 ```
