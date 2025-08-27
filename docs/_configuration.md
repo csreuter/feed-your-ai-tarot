@@ -1,3 +1,4 @@
+```yaml copy
 kind: source
 spec:
   # Source spec section
@@ -25,3 +26,4 @@ spec:
     # IMPORTANT: Use append mode to collect multiple cards
     # Default overwrite-delete-stale mode will only keep the latest card
     write_mode: "append"
+```
